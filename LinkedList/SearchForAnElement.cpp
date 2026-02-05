@@ -1,16 +1,16 @@
-#include<iostream>
-using namespace std;
+    #include<iostream>
+    using namespace std;
 
-class Node{
-public:
-    int data;
-    Node* next;
+    class Node{
+    public:
+        int data;
+        Node* next;
 
-    Node(int d1,Node* n){
-        data =d1;
-        next = n;
-    }
-};
+        Node(int d1,Node* n){
+            data =d1;
+            next = n;
+        }
+    };
 
 bool SearchForElement(Node* head,int val){
     Node* temp = head;
