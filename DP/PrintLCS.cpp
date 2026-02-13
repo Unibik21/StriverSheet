@@ -1,0 +1,53 @@
+#include<iostream>
+#include<vector>
+using namespace std;
+
+int main(){
+    string s1;
+    string s2;
+    cin>>s1>>s2;
+
+    vector<vector<int>>dp(s1.size()+1,vector<int>(s2.size()+1,0));
+
+    for(int i=0;i<s1.size();i++){
+        dp[i][0]=0;
+        dp[0][i]=0;
+    }
+
+    for(int i=1;i<s1.size()+1;i++){
+        for(int j=1;j<s2.size()+1;j++){
+            if(s1[i-1]==s2[j-1]){
+                dp[i][j]=1+dp[i-1][j-1]; 
+            }
+            else{
+                dp[i][j]=max(dp[i-1][j],dp[i][j-1]);
+            }
+        }
+    }
+    cout<<dp[s1.size()][s2.size()]<<endl;
+
+
+    int i = s1.size();
+    int j = s2.size();
+    string ans ="";
+    int len = dp[i][j];
+    for(int i=0;i<len;i++){
+        ans+='%';
+    }
+    while(i>0 && j>0){
+        if(s1[i-1]==s2[j-1]){
+            ans[len-1]=s1[i-1];
+            len--;
+            i--;
+            j--;
+        }
+        else if(dp[i-1][j]>dp[i][j-1]){
+            i--;
+        }
+        else{
+            j--;
+        }
+    }
+
+    cout<<ans<<endl;
+}
