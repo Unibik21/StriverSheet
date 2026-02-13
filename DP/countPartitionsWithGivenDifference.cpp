@@ -1,6 +1,6 @@
-    #include<iostream>
-    #include<vector>
-    using namespace std;
+#include<iostream>
+#include<vector>
+using namespace std;
 
     int solve(int i,int k,vector<int>&arr,vector<vector<int>>&dp){
         
@@ -18,6 +18,25 @@
     }
 
 
-    int main(){
-        
+
+int main(){
+    int n;
+    cin>>n;
+    vector<int>arr(n);
+    for(int i=0;i<n;i++){
+        cin>>arr[i];
     }
+    int d;
+    cin>>d;
+
+
+    int sum = 0;
+    for(int i=0;i<n;i++){
+        sum+=arr[i];
+    }
+    
+    if((sum+d)%2!=0)return 0;
+
+    vector<vector<int>>dp(n,vector<int>(((sum+d)/2)+1,-1));
+    return solve(n-1,(sum+d)/2,arr,dp);
+}
