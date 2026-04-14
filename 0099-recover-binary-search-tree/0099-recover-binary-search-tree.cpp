@@ -11,28 +11,30 @@
  */
 class Solution {
 public:
-    void traversal(vector<int>&in,TreeNode* root,int &i){
+    TreeNode* first =NULL;
+    TreeNode* prev =NULL;
+    TreeNode* middle =NULL;
+    TreeNode* last = NULL;
+    void inorder(TreeNode* root){
         if(root==NULL)return;
 
-        traversal(in,root->left,i);
-        if(in[i]!=root->val){
-            root->val = in[i];
+        inorder(root->left);
+        if(prev && root->val<prev->val){
+
+            if(first==NULL){
+                first=prev;
+                middle = root;
+            }
+            else{
+                last = root;
+            }
         }
-        i++;
-        traversal(in,root->right,i);
-    }
-    void inorder(TreeNode* root,vector<int>&in){
-        if(root==NULL)return;
-
-        inorder(root->left,in);
-        in.push_back(root->val);
-        inorder(root->right,in);
+        prev = root;
+        inorder(root->right);
     }
     void recoverTree(TreeNode* root) {
-        vector<int>in;
-        inorder(root,in);
-        sort(in.begin(),in.end());
-        int i=0;
-        traversal(in,root,i);
+        inorder(root);
+        if(last)swap(last->val,first->val);
+        else swap(first->val,middle->val);
     }
 };
