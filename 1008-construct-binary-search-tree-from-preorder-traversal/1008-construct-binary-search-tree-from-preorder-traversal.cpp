@@ -11,34 +11,15 @@
  */
 class Solution {
 public:
-    void insert(TreeNode* root,int val){
-        while(root){
-            if(root->val>val){
-                if(root->left){
-                    root=root->left;
-                }
-                else{
-                    root->left = new TreeNode(val);
-                    return;
-                }
-            }
-            else{
-                if(root->right){
-                    root=root->right;
-                }
-                else{
-                    root->right = new TreeNode(val);
-                    return;
-                }
-            }
-        }
+    TreeNode* solve(int &i,int ub,vector<int>& preorder){
+        if(i==preorder.size() || preorder[i]>ub)return NULL;
+        TreeNode* root = new TreeNode(preorder[i++]);
+        root->left = solve(i,root->val,preorder);
+        root->right = solve(i,ub,preorder);
+        return root;
     }
     TreeNode* bstFromPreorder(vector<int>& preorder) {
-        if(preorder.size()==0)return NULL;
-        TreeNode* root = new TreeNode(preorder[0]);
-        for(int i =1;i<preorder.size();i++){
-            insert(root,preorder[i]);
-        }
-        return root;
+        int i =0;
+        return solve(i,INT_MAX,preorder);
     }
 };
