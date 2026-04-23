@@ -1,40 +1,28 @@
 class Solution {
 public:
     vector<long long> distance(vector<int>& nums) {
-        vector<long long>arr(nums.size());
-
-        unordered_map<int,long long>indSum;
-        unordered_map<int,long long>freq;
-
+        vector<long long>ans(nums.size(),0);
+        unordered_map<int,vector<long long>>mp;
         for(int i=0;i<nums.size();i++){
-            if(indSum.find(nums[i])==indSum.end()){
-                freq[nums[i]]=1;
-                indSum[nums[i]]=i;
+            if(mp.find(nums[i])==mp.end()){
+                mp[nums[i]].push_back(i);
             }
             else{
-                long long f = freq[nums[i]];
-                long long lsum = indSum[nums[i]];
-                arr[i]= (long long)f*i -(long long)lsum;
-                freq[nums[i]]++;
-                indSum[nums[i]]+=(long long)i;
-            }
-        }
-        freq.clear();
-        indSum.clear();
-        for(int i=nums.size()-1;i>=0;i--){
-            if(indSum.find(nums[i])==indSum.end()){
-                freq[nums[i]]=1;
-                indSum[nums[i]]=i;
-            }
-            else{
-                long long f = freq[nums[i]];
-                long long rsum = indSum[nums[i]];
-                arr[i]+= (long long)rsum - (long long)f*i;
-                freq[nums[i]]++;
-                indSum[nums[i]]+=(long long)i;
+                long long back = mp[nums[i]].back();
+                mp[nums[i]].push_back(back+i);
             }
         }
 
-        return arr;
+        for(auto &temp:mp){
+            for(int i=0;i<temp.second.size();i++){
+                long long back = 0;
+                if(i>0)back = temp.second[i-1];
+                long long idx = temp.second[i]-back;
+                long long left = (long long)i*idx -back;
+                long long right = temp.second[temp.second.size()-1]-temp.second[i]-(long long)(temp.second.size()-i-1)*idx;
+                ans[idx]=left+right;
+            }
+        }
+        return ans;
     }
 };
