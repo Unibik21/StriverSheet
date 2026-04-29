@@ -18,7 +18,7 @@ public:
                 currScore = pSum[prevht][col+1]-pSum[ht][col+1];
             }
 
-            ll currTaken = prevScore+currScore + solve(true,ht,col+1,grid,pSum,dp);
+            ll currTaken = currScore + solve(true,ht,col+1,grid,pSum,dp);
             ll NotTaken = prevScore + solve(false,ht,col+1,grid,pSum,dp);
 
             res = max({res,currTaken,NotTaken});
