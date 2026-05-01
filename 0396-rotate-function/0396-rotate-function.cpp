@@ -10,7 +10,7 @@ public:
         int maxi = curr;
         int r = nums.size()-1;
 
-        while(r>=0){
+        while(r>0){
             curr+=sum;
             curr-=(nums.size())*nums[r];
             maxi = max(maxi,curr);
