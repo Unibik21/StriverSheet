@@ -15,6 +15,7 @@ public:
         q.push({src,0});
         while(!q.empty() && k>=0){
             int size = q.size();
+            vector<int>temp = dist;
             for(int s=0;s<size;s++){
                 auto it = q.front();
                 q.pop();
@@ -24,12 +25,13 @@ public:
                 for(auto &j:adj[node]){
                     int adjNode = j.first;
                     int edgeCost = j.second;
-                    if(dist[adjNode]>edgeCost+cost){
-                        dist[adjNode]=edgeCost+cost;
-                        q.push({adjNode,dist[adjNode]});
+                    if(temp[adjNode]>edgeCost+cost){
+                        temp[adjNode]=edgeCost+cost;
+                        q.push({adjNode,temp[adjNode]});
                     }
                 }
             }
+            dist = temp;
             k--;
         }
 
