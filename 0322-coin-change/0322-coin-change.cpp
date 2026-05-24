@@ -1,24 +1,17 @@
 class Solution {
 public:
-    int solve(int i,int curr,vector<int>&coins,int total,vector<vector<int>>&dp){
-        if(curr==total)return 0;
-        if(i==coins.size()){
-            if(curr==total) return 0;
-            else return 1e9;
-        }
-        if(dp[i][curr]!=-1) return dp[i][curr];
-        int take = INT_MAX;
-        if((long long)curr+coins[i]<=total){
-            take= 1+solve(i,curr+coins[i],coins,total,dp);
-        }
-        int nottake = solve(i+1,curr,coins,total,dp);
-
-        return dp[i][curr]=min(take,nottake);
+    int solve(int i,int amount,vector<int>&coins,vector<vector<int>>&dp){
+        if(amount==0)return 0;
+        if(i==coins.size())return 1e9;
+        if(dp[i][amount]!=-1)return dp[i][amount];
+        int nottake = solve(i+1,amount,coins,dp);
+        int take = 1e9;
+        if(coins[i]<=amount)take = 1+solve(i,amount-coins[i],coins,dp);
+        return dp[i][amount]=min(take,nottake);
     }
-    int coinChange(vector<int>& coins, int amount) {
-        vector<vector<int>>dp(coins.size(),vector<int>(amount,-1));
-        int ans = solve(0,0,coins,amount,dp);
-        if(ans==1e9)return -1;
-        return ans;
+    int coinChange(vector<int>& coins, int amount){
+        vector<vector<int>>dp(coins.size(),vector<int>(amount+1,-1));
+        int total= solve(0,amount,coins,dp);
+        return total==1e9?-1:total;
     }
 };
