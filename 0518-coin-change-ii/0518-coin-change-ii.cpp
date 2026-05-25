@@ -1,17 +1,17 @@
 class Solution {
 public:
-    int solve(int i,int amt,vector<int>&coins,vector<vector<int>>&dp){
-        if(amt==0)return 1;
-        if(i==coins.size())return 0;
-        if(dp[i][amt]!=-1)return dp[i][amt];
-        int nottake = solve(i+1,amt,coins,dp);
-        int take=0;
-        if(amt>=coins[i])take=solve(i,amt-coins[i],coins,dp);
-
-        return dp[i][amt]=take+nottake;
-    }
     int change(int amount, vector<int>& coins) {
-        vector<vector<int>>dp(coins.size(),vector<int>(amount+1,-1));
-        return solve(0,amount,coins,dp);
+        vector<vector<long long>>dp(coins.size()+1,vector<long long>(amount+1,0));
+        for(int i=0;i<=coins.size();i++)dp[i][0]=1;
+        for(int i=coins.size()-1;i>=0;i--){
+            for(int amt = 1;amt<=amount;amt++){
+                long long nottake = dp[i+1][amt];
+                long long take =0;
+                if(coins[i]<=amt)take = dp[i][amt-coins[i]];
+                if(take+nottake>INT_MAX)dp[i][amt]=INT_MAX;
+                else dp[i][amt]=nottake+take;
+            }
+        }
+        return (int)dp[0][amount];
     }
 };
