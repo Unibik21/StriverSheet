@@ -17,7 +17,23 @@ public:
         return dp[i][b]=prof;
     }
     int maxProfit(vector<int>& p){
-        vector<vector<int>>dp(p.size()+1,vector<int>(2,-1));
-        return solve(0,1,p,dp);
+        vector<vector<int>>dp(p.size()+2,vector<int>(2,0));
+        for(int i=p.size()-1;i>=0;i--){
+            for(int b=1;b>=0;b--){
+                int prof =0;
+                if(b){
+                    int buy = -p[i]+dp[i+1][0];
+                    int notbuy = dp[i+1][1];
+                    prof = max(buy,notbuy);
+                }
+                else{
+                    int sell = p[i]+dp[i+2][1];
+                    int notsell = dp[i+1][0];
+                    prof = max(sell,notsell);
+                }
+                dp[i][b]=prof;
+            }
+        }
+        return dp[0][1];
     }
 };
