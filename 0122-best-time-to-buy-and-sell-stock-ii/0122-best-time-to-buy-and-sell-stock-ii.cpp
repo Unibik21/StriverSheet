@@ -18,8 +18,20 @@ public:
 
         return dp[i][b]=profit;
     }
-    int maxProfit(vector<int>& prices) {
-        vector<vector<int>>dp(prices.size(),vector<int>(2,-1));
-        return solve(0,1,prices,dp);
+    int maxProfit(vector<int>& p) {
+        vector<vector<int>>dp(p.size()+1,vector<int>(2,0));
+        
+
+        for(int i=p.size()-1;i>=0;i--){
+            int take = -p[i]+dp[i+1][0];
+            int nottake = dp[i+1][1];
+            dp[i][1] = max(take,nottake);
+           
+            int sell = p[i]+dp[i+1][1];
+            int notsell = dp[i+1][0];
+            dp[i][0] = max(sell,notsell);
+        }
+
+        return dp[0][1];
     }
 };
