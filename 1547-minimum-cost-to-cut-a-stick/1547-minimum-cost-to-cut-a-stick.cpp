@@ -2,8 +2,8 @@ class Solution {
 public:
     int solve(int i,int j,vector<int>& cuts,vector<vector<int>>&dp){
         if(i>j)return 0;
-        int mini = 1e9;
         if(dp[i][j]!=-1)return dp[i][j];
+        int mini = 1e9;
         for(int k = i;k<=j;k++){
             int cost = cuts[j+1]-cuts[i-1]+solve(i,k-1,cuts,dp)+solve(k+1,j,cuts,dp);
             mini = min(mini,cost);
