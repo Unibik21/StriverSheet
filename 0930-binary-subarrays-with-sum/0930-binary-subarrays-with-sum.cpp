@@ -1,18 +1,17 @@
 class Solution {
 public:
-    int solve(vector<int>&nums,int k){
+    int solve(vector<int>&nums, int t){
         int l=0;
-        int r=0;
+        int r =0;
         int cnt =0;
-        int sum =0;
-
+        int sum=0;
         while(r<nums.size()){
             sum+=nums[r];
-            while(sum>k){
+            while(sum>t){
                 sum-=nums[l];
                 l++;
             }
-            cnt+=(r-l+1);
+            if(sum<=t)cnt+=r-l+1;
             r++;
         }
         return cnt;
