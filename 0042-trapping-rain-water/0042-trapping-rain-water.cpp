@@ -1,28 +1,33 @@
 class Solution {
 public:
     int trap(vector<int>& h) {
-        vector<int>gl(h.size());
-        vector<int>gr(h.size());
+        int l=0;
+        int r = h.size()-1;
+        int lmax =0;
+        int rmax =0;
+        int total =0;
 
-        gl[0]=h[0];
-        gr[h.size()-1]=h[h.size()-1];
-        int maxi = gl[0];
-        for(int i=1;i<h.size();i++){
-            maxi = max(maxi,h[i]);
-            gl[i]=maxi;
-        }
-        maxi = gr[h.size()-1];
-        for(int i=h.size()-1;i>=0;i--){
-            maxi=max(maxi,h[i]);
-            gr[i]=maxi;
+        while(l<r){
+            if(h[l]<=h[r]){
+                if(h[l]<lmax){
+                    total+=lmax-h[l];
+                }
+                else{
+                    lmax=h[l];
+                }
+                l++;
+            }
+            else{
+                if(h[r]<rmax){
+                    total += rmax-h[r];
+                }
+                else{
+                    rmax=h[r];
+                }
+                r--;
+            }
         }
 
-        int ans =0;
-        for(int i=1;i<h.size()-1;i++){
-            int minh = min(gl[i],gr[i]);
-            ans+=minh-h[i];
-        }
-
-        return ans;
+        return total;
     }
 };
