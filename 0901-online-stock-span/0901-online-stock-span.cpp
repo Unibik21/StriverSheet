@@ -1,17 +1,16 @@
 class StockSpanner {
 public:
-    vector<int>arr;
-    StockSpanner() {
+    int ind=-1;
+    stack<pair<int,int>>st;
+    StockSpanner() {  
     }
     
     int next(int price) {
-       arr.push_back(price);
-       int cnt=0;
-       for(int i=arr.size()-1;i>=0;i--){
-        if(arr[i]<=price)cnt++;
-        else break;
-       }
-       return cnt;
+        ind++;
+        while(!st.empty() && st.top().first<=price)st.pop();
+        int ans = ind - (st.empty()?-1:st.top().second);
+        st.push({price,ind});
+        return ans;
     }
 };
 
