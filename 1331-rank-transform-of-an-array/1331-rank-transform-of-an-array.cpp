@@ -11,9 +11,7 @@ public:
         vector<int>ans(arr.size());
 
         for(auto &i:ind){
-            vector<int>idx = i.second;
-
-            for(auto &j:idx){
+            for(auto &j:i.second){
                 ans[j]=r;
             }
             r++;
