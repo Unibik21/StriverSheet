@@ -1,31 +1,27 @@
 class Solution {
 public:
-    string smallestSubsequence(string s1) {
-        unordered_map<char,int>cnt;
-        vector<int>vis(26,0);
+    string smallestSubsequence(string s) {
+        vector<int> vis(26), num(26);
+        for (char ch : s) {
+            num[ch - 'a']++;
+        }
 
-        for(auto &i:s1)cnt[i]++;
-        stack<char>st;
-        for(auto &i:s1){
-            if(!vis[i-'a']){
-                while(!st.empty() && st.top()>i){
-                    if(cnt[st.top()]>0){
-                        vis[st.top()-'a']=0;
-                        st.pop();
-                    }
-                    else{
+        string stk;
+        for (char ch : s) {
+            if (!vis[ch - 'a']) {
+                while (!stk.empty() && stk.back() > ch) {
+                    if (num[stk.back() - 'a'] > 0) {
+                        vis[stk.back() - 'a'] = 0;
+                        stk.pop_back();
+                    } else {
                         break;
                     }
                 }
-                vis[i-'a']=1;
-                st.push(i);
+                vis[ch - 'a'] = 1;
+                stk.push_back(ch);
             }
-            cnt[i]--;
+            num[ch - 'a'] -= 1;
         }
-        string s = "";
-
-        while(!st.empty()){s+=st.top(); st.pop();}
-        reverse(s.begin(),s.end());
-        return s;
+        return stk;
     }
 };
