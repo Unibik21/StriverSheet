@@ -2,7 +2,7 @@ class Solution {
 public:
     string evaluate(string s, vector<vector<string>>& knowledge) {
         string ans = "";
-        map<string,string>mp;
+        unordered_map<string,string>mp;
         for(auto &i:knowledge){
             string key = i[0];
             string val = i[1];
