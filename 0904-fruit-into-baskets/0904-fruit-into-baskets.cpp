@@ -9,7 +9,7 @@ public:
 
         while(r<fruits.size()){
             cnt[fruits[r]]++;
-            while(cnt.size()>2){
+            if(cnt.size()>2){
                 cnt[fruits[l]]--;
                 if(cnt[fruits[l]]==0)cnt.erase(fruits[l]);
                 l++;
